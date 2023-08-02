@@ -63,4 +63,17 @@ class PostListControllerTest extends TestCase
        dump(User::get()->toArray());
         $this->assertTrue(true);
     }
+
+    /** @test */
+    public function ブログの公開・非公開のscope()
+    {
+        $post1 = Post::factory()->closed()->create();
+
+        $post2 = Post::factory()->create();
+
+        $posts = Post::onlyOpen()->get();
+
+        $this->assertFalse($posts->contains($post1));
+        $this->assertTrue($posts->contains($post2));
+    }
 }

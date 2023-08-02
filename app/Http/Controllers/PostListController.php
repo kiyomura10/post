@@ -13,7 +13,7 @@ class PostListController extends Controller
        // DB::enableQueryLog();
 
         $posts = Post::query()
-        ->where('status',Post::OPEN)
+        ->onlyOpen()
         ->orderByDesc('comments_count')
         ->withCount('comments')
         ->get();
