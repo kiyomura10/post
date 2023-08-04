@@ -9,7 +9,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
 
-class PostListControllerTest extends TestCase
+class PostControllerTest extends TestCase
 {
     use RefreshDatabase;
     /**
@@ -37,6 +37,24 @@ class PostListControllerTest extends TestCase
             '(1件のコメント)',
         ]);
   
+    }
+
+
+    /** @test */
+    public function ブログの詳細画面が表示できる()
+    {
+        $post = Post::factory()->create();
+
+        $this->get('posts/'.$post->id)
+            ->assertOk()
+            ->assertSee($post->title)
+            ->assertSee($post->user->name);
+    }
+
+    /** @test */
+    public function ブログで非公開のものは、詳細画面が表示できない()
+    {
+
     }
 
     /** @test */
